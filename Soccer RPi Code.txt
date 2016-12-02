@@ -1,0 +1,67 @@
+import RPi.GPIO as io
+import time
+import sys
+
+m1=11
+m2=12
+e1=13
+m3=15
+m4=16
+e2=18
+
+io.setmode(io.BOARD)
+io.setup(m1,io.OUT)
+io.setup(m2,io.OUT)
+io.setup(m3,io.OUT)
+io.setup(m4,io.OUT)
+io.setup(e1,io.OUT)
+io.setup(e2,io.OUT)
+
+l=io.PWM(e1,100) #left motor enable pin
+r=io.PWM(e2,100)
+
+if float(sys.argv[1])==1:
+	io.output(m1,io.HIGH)
+	io.output(m2,io.LOW)
+	io.output(m3,io.HIGH)
+	io.output(m4,io.LOW)
+	l.start(float(sys.argv[3]))
+	r.start(float(sys.argv[3]))
+	print "done"
+	
+
+elif float(sys.argv[1])==-1:
+	io.output(m1,io.LOW)
+	io.output(m2,io.HIGH)
+	io.output(m3,io.LOW)
+	io.output(m4,io.HIGH)
+	l.start(float(sys.argv[3]))
+	r.start(float(sys.argv[3]))
+
+elif float(sys.argv[2])==1:
+	io.output(m1,io.LOW)
+	io.output(m2,io.HIGH)
+	io.output(m3,io.HIGH)
+	io.output(m4,io.LOW)
+	l.start(100)
+	r.start(100)
+
+elif float(sys.argv[2])==-1:
+	io.output(m1,io.HIGH)
+	io.output(m2,io.LOW)
+	io.output(m3,io.LOW)
+	io.output(m4,io.HIGH)
+	l.start(100)
+	r.start(100)
+	
+else:
+	io.output(e1,io.LOW)
+	io.output(e2,io.LOW)
+time.sleep(1)
+io.output(m1,io.HIGH)
+io.output(m2,io.LOW)
+io.output(m3,io.HIGH)
+io.output(m4,io.LOW)
+io.output(e1,io.LOW)
+io.output(e2,io.LOW)
+io.cleanup()
